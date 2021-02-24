@@ -53,7 +53,7 @@
           <el-table-column
             prop="下单序列号"
             label="外销编号"
-            width="150"
+            width="170"
             show-overflow-tooltip
           >
           </el-table-column>
@@ -78,6 +78,13 @@
           >
           </el-table-column>
           <el-table-column
+            prop="客户编码"
+            label="客户编码"
+            width="120"
+            show-overflow-tooltip
+          >
+          </el-table-column>          
+          <el-table-column
             prop="客户名称"
             label="客户名称"
             width="150"
@@ -101,9 +108,6 @@
             width="130"
             show-overflow-tooltip
           >
-            <!--                 <template slot-scope="scope">
-                <span v-html="scope.row.客户化特殊需求.substring(0,10)"></span>
-                </template>  -->
           </el-table-column>
           <el-table-column prop="铭牌" label="铭牌" width="80">
           </el-table-column>
@@ -116,9 +120,9 @@
             show-overflow-tooltip
           >
           </el-table-column>
-          <el-table-column prop="压缩机类别" label="压缩机类别" width="80">
+          <el-table-column prop="压缩机类别" label="压缩机类别" width="80" show-overflow-tooltip>
           </el-table-column>
-          <el-table-column prop="技术文件" label="技术文件" width="100">
+          <el-table-column prop="技术文件" label="技术文件" width="100" show-overflow-tooltip>
           </el-table-column>
           <el-table-column
             prop="代码分配时间"
@@ -213,8 +217,8 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
-                  <el-form-item label="客户料号" prop="客户料号">
-                    <el-input v-model="addForm.客户料号" disabled></el-input>
+                  <el-form-item label="客户编码" prop="客户编码">
+                    <el-input v-model="addForm.客户编码" disabled></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -590,7 +594,6 @@ export default {
       ddnum: "", //订单编号：[@销售类别change]*
 
       //2.
-      customor_id: "", //客户料号：["客户编码"]
       customor_name: "", //客户：Cells["客户名称"]
       ordertype: "", //订单类型[null]*
       count_order: 0, //订单数量：["数量"]*
@@ -844,8 +847,8 @@ export default {
     },
     selectCurrentRow(val) {
       this.currentRow = val;
-      this.isselected = true;
-      //this.addForm = val;
+      if(val!=null){ this.isselected = true;}
+     console.log("bh:"+val);
     },
     OrderNumChange() {},
     // selsChange: function (sels) {
@@ -1024,6 +1027,7 @@ export default {
     },
     //显示新增界面object
     handleAdd() {
+      console.log(this.isselected);
       if(this.isselected && !util.isEmt.format(this.currentRow.项目阶段)){
         this.handleAddData();
         this.isselected=false;
@@ -1093,7 +1097,8 @@ export default {
         月份: "",
         要求完成日期: util.formatDate.format(date1, "yyyy-MM-dd"),
         订单编号: "",
-        客户料号: this.currentRow.客户编码,
+        客户编码: this.currentRow.客户编码,
+        客户料号: this.currentRow.客户物料代码,
         客户: this.currentRow.客户名称,
         订单类型: "", //null
         订单数量: this.currentRow.数量,

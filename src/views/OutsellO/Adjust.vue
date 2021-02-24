@@ -502,7 +502,7 @@ export default {
       isselected: false,
       sels: [], //列表选中列
 
-      emails: [],
+      emails: null,
       opsemail: [],
 
       isexpand: false,      
@@ -519,8 +519,9 @@ export default {
         date: "",
         productid: "",
         bz: "冲减",
-        llr: null,
-        llrid: null,
+        llr: "",
+        llrid: "",
+        listmail:[],
       },
       editFormVisible: false, //编辑界面是否显示
       editLoading: false,
@@ -651,6 +652,7 @@ export default {
             id:this.data1.ID,
             productid:this.data1.凌达编码,
             tznum: 0,
+            listmail:this.emails,
             date: this.data1.要求完成日期,
             bz: "冲减", };
       }
@@ -673,6 +675,7 @@ export default {
             id: this.data1.ID,
             productid:this.data1.凌达编码,
             tznum: 0,
+            listmail:this.emails,
             date: this.data1.要求完成日期,
             bz: "冲减", };
         } else if (this.total > 1) {
@@ -702,7 +705,7 @@ export default {
             if (user !=null) {
               para.lrrid = user.uID;
               para.lrr = user.uRealName;
-
+              para.listmail=this.emails;
               editCusOrder(para).then((res) => {
                 if (util.isEmt.format(res)) {
                   this.editLoading = false;
@@ -715,6 +718,8 @@ export default {
                     type: "success",
                   });
                   this.$refs["editForm"].resetFields();
+                  this.emails=null;
+                  this.editFormVisible = false; //编辑不可见
                   //获取订单page
                   let para = {
                     ordernum: cusorder,
@@ -731,6 +736,7 @@ export default {
                     message: res.data.msg,
                     type: "error",
                   });
+                  this.editFormVisible = false; //编辑不可见
                   this.editLoading = false;
                 }
               });
