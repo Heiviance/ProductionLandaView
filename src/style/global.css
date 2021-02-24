@@ -1,0 +1,6 @@
+.el-input.is-disabled {
+    background-color:#989a9c;
+    border-color:#0a4dd4;
+    color:#e7ebf1;
+    cursor:not-allowed;
+}
