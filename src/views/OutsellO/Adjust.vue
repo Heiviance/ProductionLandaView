@@ -358,14 +358,18 @@
 
               <el-row :gutter="0">
                 <el-col :span="23">
+                  <el-tooltip class="item" effect="dark" content="原订单备注信息" placement="bottom-start">
                   <el-form-item label="订单备注" prop="备注" label-width="90px" >
-                    <el-input v-model="data1.备注" ></el-input>
+                    <el-input v-model="editForm.bz" ></el-input>
                   </el-form-item>
+    </el-tooltip>
+
                 </el-col>
               </el-row>
 
              <el-row :gutter="0">
                 <el-col :span="23">
+                  <el-tooltip class="item" effect="dark" content="若发送邮件，此备注会随邮件一起发送" placement="bottom-start">
                   <el-form-item label="调整备注" prop="调整备注">
                       <el-radio-group v-model="radio1" size="mini" @change="radio1change">
                         <el-radio
@@ -377,12 +381,14 @@
                         </el-radio>
                       </el-radio-group>
                   </el-form-item>
+    </el-tooltip>
+
                 </el-col>
               </el-row>
               <el-row :gutter="0">
                 <el-col :span="23">
                   <el-form-item label=" "  >
-                    <el-input v-model="editForm.bz"></el-input>
+                    <el-input v-model="editForm.tzbz"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -585,7 +591,7 @@ export default {
       this.currentRow = val;
       this.isselected = true;
     },
-    radio1change() {this.editForm.bz=this.radio1;},
+    radio1change() {this.editForm.tzbz=this.radio1;},
     callFunction(item) {
       this.page = 1;
       this[item.Func].apply(this, item);
@@ -654,7 +660,8 @@ export default {
             tznum: 0,
             listmail:this.emails,
             date: this.data1.要求完成日期,
-            bz: "冲减", };
+            bz:this.data1.备注,
+            tzbz: "冲减", };
       }
       else{
       let para = {
@@ -677,7 +684,8 @@ export default {
             tznum: 0,
             listmail:this.emails,
             date: this.data1.要求完成日期,
-            bz: "冲减", };
+            bz:this.data1.备注,
+            tzbz: "冲减", };
         } else if (this.total > 1) {
           this.$message({
             message: "查询结果有多条订单，请选择一条进行调整",
@@ -830,4 +838,7 @@ a {
 a:hover {
   cursor: pointer;
 }
+.item {
+      margin: 4px;
+    }
 </style>

@@ -422,7 +422,7 @@
           <div>
             <el-table
               :data="data1"
-              :height="calhight"
+              :height="calhight2"
               size="mini"
               border
               style="width: 100%"
@@ -796,8 +796,12 @@ export default {
   },
   computed: {
     calhight: function () {
+      return window.innerHeight / 3-50;
+    },
+    calhight2: function () {
       return window.innerHeight / 3;
     },
+
     cobh: function () {
       let s1 = "W";
       let s2 = "";
@@ -847,8 +851,9 @@ export default {
     },
     selectCurrentRow(val) {
       this.currentRow = val;
-      if(val!=null){ this.isselected = true;}
-     console.log("bh:"+val);
+      if(val!=null)
+      { this.isselected = true;
+      }
     },
     OrderNumChange() {},
     // selsChange: function (sels) {
@@ -1027,12 +1032,15 @@ export default {
     },
     //显示新增界面object
     handleAdd() {
-      console.log(this.isselected);
+      //console.log("add:"+this.isselected);
+      this.$refs["addForm"].clearValidate();      
+      this.$refs["addForm"].resetFields();
       if(this.isselected && !util.isEmt.format(this.currentRow.项目阶段)){
         this.handleAddData();
         this.isselected=false;
       }
       else{
+      this.isselected=false;
       let para2 = {
         pagenum: 1,
         pagesize: 10,
@@ -1158,10 +1166,6 @@ export default {
               (para.月份 = this.curmonth),
               (para.频类 = this.pinlei),
               (para.订单编号 = this.cobh),
-              // para.CreateTime = util.formatDate.format(new Date(), "yyyy-MM-dd");
-              // para.ModifyTime = para.CreateTime;
-              // para.IsDeleted = false;
-
               addCusOrder(para).then((res) => {
                 if (util.isEmt.format(res)) {
                   //nullorempty
